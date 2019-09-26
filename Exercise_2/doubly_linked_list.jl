@@ -55,7 +55,7 @@ end
 # For testing
 
 function print_doubly_linked_list(linkedlist)
-    node = linked_list
+    node = linkedlist
 
     # Find head
     while node.prev != nothing
