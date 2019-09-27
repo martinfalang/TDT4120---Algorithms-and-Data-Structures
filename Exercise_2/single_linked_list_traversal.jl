@@ -29,7 +29,7 @@ function findindexinlist(linkedlist, index)
     end
     
     while current_index < index
-        if node.next == nothing
+        if node.next === nothing
             return -1
         end
         current_index += 1
