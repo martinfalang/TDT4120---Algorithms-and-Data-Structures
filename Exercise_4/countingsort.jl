@@ -39,14 +39,15 @@ function chartodigit(character)
     return character - '`'
 end
 
-### Tests ###
-
-printstyled("\n\n\n---------------\nRunning tests!\n---------------\n"; color = :magenta)
-
 using Test
-@testset "Basic tests" begin
-    @test countingsortletters(["aa", "bb", "cc"], 1) == ["aa", "bb", "cc"]
-    @test countingsortletters(["cc", "bb", "aa"], 2) == ["aa", "bb", "cc"]
-    @test countingsortletters(["ac", "bb", "ca"], 2) == ["ca", "bb", "ac"]
-    @test countingsortletters(["ccc", "cba", "ca", "ab", "abc"], 2) == ["ca", "cba", "ab", "abc", "ccc"]
+
+if PROGRAM_FILE != "" && realpath(@__FILE__) == realpath(PROGRAM_FILE)
+    ### Tests ###
+    printstyled("\n\n\n---------------\nRunning tests!\n---------------\n"; color = :magenta)
+    @testset "Basic tests" begin
+        @test countingsortletters(["aa", "bb", "cc"], 1) == ["aa", "bb", "cc"]
+        @test countingsortletters(["cc", "bb", "aa"], 2) == ["aa", "bb", "cc"]
+        @test countingsortletters(["ac", "bb", "ca"], 2) == ["ca", "bb", "ac"]
+        @test countingsortletters(["ccc", "cba", "ca", "ab", "abc"], 2) == ["ca", "cba", "ab", "abc", "ccc"]
+    end
 end

@@ -43,14 +43,18 @@ function find_valid_index(A, index)
     return length(A[index]) + 1 
 end
 
-### Tests
-
-printstyled("\n\n\n---------------\nRunning tests!\n---------------\n"; color = :magenta)
-
 using Test
-@testset "Basic tests" begin
-    @test countingsortlength(["ccc", "bb", "a"]) == ["a", "bb", "ccc"]
-    @test countingsortlength(["aaa", "bb", "c"]) == ["c", "bb", "aaa"]
-    @test countingsortlength(["bb", "a", ""]) == ["", "a", "bb"] # Testen her sjekker om du kan sortere også med emtpy string
-    @test countingsortlength(["bbbb", "aa", "aaaa", "ccc"]) == ["aa", "ccc", "bbbb", "aaaa"] # Fra oppgaven
+
+if PROGRAM_FILE != "" && realpath(@__FILE__) == realpath(PROGRAM_FILE) 
+    ### Tests
+    printstyled("\n\n\n---------------\nRunning tests!\n---------------\n"; color = :magenta)
+    
+    @testset "Basic tests" begin
+        @test countingsortlength(["ccc", "bb", "a"]) == ["a", "bb", "ccc"]
+        @test countingsortlength(["aaa", "bb", "c"]) == ["c", "bb", "aaa"]
+        @test countingsortlength(["bb", "a", ""]) == ["", "a", "bb"] # Testen her sjekker om du kan sortere også med emtpy string
+        @test countingsortlength(["bbbb", "aa", "aaaa", "ccc"]) == ["aa", "ccc", "bbbb", "aaaa"] # Fra oppgaven
+    end
+
 end
+
