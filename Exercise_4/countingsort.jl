@@ -1,0 +1,56 @@
+function countingsortletters(A,position)
+    # Find the largest element in A
+    largest_value = -1
+    for i in 1:length(A)
+        char_value = chartodigit(A[i][position])
+        if char_value > largest_value
+            largest_value = char_value
+        end
+    end
+    
+    # Make an array with largest_value number of elements
+    count_array = zeros(Int, 1, largest_value)
+    
+    # Count the occurances of each letter
+    for i in 1:length(A)
+        index = chartodigit(A[i][position])
+        count_array[index] += 1
+    end
+
+    # Make the table cumulative
+    for i in 2:length(count_array)
+        count_array[i] += count_array[i - 1]
+    end
+    
+    sorted_array = Vector{Union{Nothing, String}}(nothing, length(A))
+
+    # Place the elements in the right order in sorted_array
+    for i in length(A):-1:1
+        index = chartodigit(A[i][position])
+        sorted_array[count_array[index]] = A[i]
+        count_array[index] -= 1
+    end
+    
+    return sorted_array
+
+end
+
+function chartodigit(character)
+    return character - '`'
+end
+
+### Tests ###
+
+printstyled("\n\n\n---------------\nKjører tester!!\n---------------\n"; color = :magenta)
+
+using Test
+@testset "Basic tests" begin
+    @test countingsortletters(["aa", "bb", "cc"], 1) == ["aa", "bb", "cc"]
+    @test countingsortletters(["cc", "bb", "aa"], 2) == ["aa", "bb", "cc"]
+    @test countingsortletters(["ac", "bb", "ca"], 2) == ["ca", "bb", "ac"]
+    @test countingsortletters(["ccc", "cba", "ca", "ab", "abc"], 2) == ["ca", "cba", "ab", "abc", "ccc"]
+end
+
+println("\nFungerte alt? Prøv å kjør koden i inginious!")
+println("Husk at disse testene ikke alltid sjekker alle edge-cases")
+println("---------------------------------------------------------\n\n")
