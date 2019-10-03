@@ -4,40 +4,44 @@ include("countingsort_length.jl")
 
 function flexradix(A, maxlength)
 
-    # Add padding
-    for i in 1:length(A) 
-        
-        for j in (length(A[i]) + 1):maxlength
-            A[i] *= '`'
-        end
-
-    end
+    # Sort A after length. This must be done as the 
+    # following algorithm can't sort for example 
+    # ['ab', 'a'] in the right order so it must be
+    # done by length  
+    A = countingsortlength(A)
+    
 
     for digit in maxlength:-1:1
-        A = countingsortletters(A, digit)
-    end
+        
+        # This array will include the words in A that 
+        # have length of digit or more
+        words = []
+        # This array will include the indexes from A that
+        # have a number that has a length of digit or more
+        indexes = []
 
-    # Remove padding
-    for i in 1:length(A)
-
-        index = 0
-
-        for j in 1:length(A[i])
-            if A[i][j] == '`'
-                index = j
-                break
+        # Find the elements with length longer than digit
+        for i in 1:length(A)
+            if length(A[i]) >= digit
+                push!(words, A[i])
+                push!(indexes, i)
             end
         end
+        
+        # Sort these words at position digit
+        words = countingsortletters(words, digit)
 
-        if index > 0
-            A[i] = A[i][1:index - 1]
+        # Replace the indexes we took elements from in A 
+        # with the now sorted values 
+        for i in 1:length(words)
+            A[indexes[i]] = words[i]
         end
+        
     end
 
     return A
 
 end
-
 
 using Test
 
