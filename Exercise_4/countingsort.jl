@@ -9,17 +9,17 @@ function countingsortletters(A,position)
     end
     
     # Make an array with largest_value number of elements
-    count_array = zeros(Int, 1, largest_value)
+    count_array = zeros(Int, 1, largest_value + 1)
     
     # Count the occurances of each letter
     for i in 1:length(A)
         index = chartodigit(A[i][position])
-        count_array[index] += 1
+        count_array[index + 1] += 1
     end
 
     # Make the table cumulative
-    for i in 2:length(count_array)
-        count_array[i] += count_array[i - 1]
+    for i in 2:largest_value
+        count_array[i + 1] += count_array[i]
     end
     
     sorted_array = Vector{Union{Nothing, String}}(nothing, length(A))
@@ -27,8 +27,8 @@ function countingsortletters(A,position)
     # Place the elements in the right order in sorted_array
     for i in length(A):-1:1
         index = chartodigit(A[i][position])
-        sorted_array[count_array[index]] = A[i]
-        count_array[index] -= 1
+        sorted_array[count_array[index + 1]] = A[i]
+        count_array[index + 1] -= 1
     end
     
     return sorted_array
